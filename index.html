@@ -3,153 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casa Game Shop - All Games</title>
+    <title>Casa Game Shop | Official</title>
     
-    <link rel="icon" type="image/png" href="https://github.com/kohtethtetnaywin015-stack/casagameshop-app/blob/main/photo_2026-05-04_16-54-06.jpg">
+    <link rel="icon" type="image/png" href="https://github.com/kohtethtetnaywin015-stack/casagameshop-app/blob/main/photo_2026-05-04_16-54-06.jpg?raw=true">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #0d1117; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .hero-banner { background: linear-gradient(135deg, #1f2937 0%, #111827 100%); border: 1px solid #374151; }
-        .card-item { background: #1a202c; border: 1px solid #2d3748; border-radius: 12px; transition: all 0.3s ease; }
-        .card-item:hover { transform: translateY(-3px); border-color: #3b82f6; box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2); }
-        .buy-btn { background: linear-gradient(90deg, #3b82f6, #1d4ed8); transition: 0.3s; }
-        .buy-btn:hover { filter: brightness(1.2); }
-        .tab-btn { background: #1f2937; border: 1px solid #374151; }
-        .tab-btn.active { background: #2563eb; border-color: #3b82f6; color: #ffffff; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap');
+        body { background: #080a0f; color: #e2e8f0; font-family: 'Rajdhani', sans-serif; background-image: radial-gradient(circle at top right, #1e293b, #080a0f); min-height: 100vh; }
+        .glass-card { background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; }
+        .active-tab { background: #3b82f6; color: white; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); border-color: #3b82f6; }
+        .nav-btn { transition: 0.3s; border: 1px solid #1e293b; color: #94a3b8; font-size: 10px; font-weight: bold; padding: 10px 15px; border-radius: 12px; white-space: nowrap; flex: none; }
+        .package-card { transition: 0.2s; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); background: rgba(15, 23, 42, 0.6); }
+        .package-card:hover { border-color: #3b82f6; }
+        .selected-pkg { border-color: #3b82f6 !important; background: rgba(59, 130, 246, 0.2) !important; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        #toast { visibility: hidden; min-width: 200px; background: #3b82f6; color: white; border-radius: 8px; padding: 12px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 100; text-align: center; }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
     </style>
 </head>
-<body class="p-4 max-w-md mx-auto">
+<body class="p-4 max-w-lg mx-auto">
 
-    <div class="text-center mb-6 mt-2">
-        <img src="https://i.imgur.com/your-logo.png" alt="Casa Game Shop Logo" class="w-20 h-20 mx-auto rounded-full border-2 border-blue-500 shadow-lg mb-3 object-cover">
-        <h1 class="text-3xl font-black tracking-wider text-blue-400">CASA GAME SHOP</h1>
-        <p class="text-gray-400 text-xs mt-1 uppercase tracking-widest">All Games In One Platform</p>
-    </div>
+    <div id="toast">Copied!</div>
 
-    <div class="flex justify-around mb-6">
-        <button onclick="switchCategory('mlbb')" id="btn-mlbb" class="tab-btn active px-4 py-2 rounded-lg font-bold text-xs flex-1 mr-2">
-            <i class="fas fa-shield-alt mr-1"></i> MLBB
-        </button>
-        <button onclick="switchCategory('pubg')" id="btn-pubg" class="tab-btn px-4 py-2 rounded-lg font-bold text-xs flex-1 ml-2">
-            <i class="fas fa-crosshairs mr-1"></i> PUBG
-        </button>
-    </div>
+    <header class="text-center mb-6 pt-4">
+        <img src="https://github.com/kohtethtetnaywin015-stack/casagameshop-app/blob/main/photo_2026-05-04_16-54-06.jpg?raw=true" alt="Casa Logo" class="w-24 h-24 mx-auto rounded-full border-2 border-blue-500 p-1 mb-3 object-cover shadow-[0_0_20px_rgba(59,130,246,0.5)]">
+        <h1 class="text-3xl font-bold tracking-tighter text-white uppercase" style="font-family: 'Orbitron';">CASA GAME SHOP</h1>
+        <p class="text-[9px] text-blue-400 tracking-[0.3em] font-bold uppercase mt-1">Diamond & Digital Service</p>
+    </header>
 
-    <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 mb-6">
-        <h3 class="text-sm font-bold text-gray-300 mb-3"><i class="fas fa-user-circle mr-2 text-blue-400"></i>ENTER ACCOUNT DETAILS</h3>
-        <div class="grid grid-cols-2 gap-3">
-            <div>
-                <label id="id-label" class="text-xs text-gray-500">Game ID (e.g. 12345678)</label>
-                <input type="text" id="userId" placeholder="Enter ID" class="w-full mt-1 p-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-blue-500 text-sm">
-            </div>
-            <div>
-                <label id="zone-label" class="text-xs text-gray-500">Zone ID (e.g. 1234)</label>
-                <input type="text" id="zoneId" placeholder="Enter SV ID" class="w-full mt-1 p-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-blue-500 text-sm">
-            </div>
+    <nav class="flex gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
+        <button onclick="switchCategory('mlbb_std')" id="tab-mlbb_std" class="nav-btn active-tab">MLBB NORMAL</button>
+        <button onclick="switchCategory('mlbb_ban')" id="tab-mlbb_ban" class="nav-btn glass-card">BAN SERVER</button>
+        <button onclick="switchCategory('mlbb_indo')" id="tab-mlbb_indo" class="nav-btn glass-card">INDO SERVER</button>
+        <button onclick="switchCategory('mlbb_rus')" id="tab-mlbb_rus" class="nav-btn glass-card">RUSSIA SERVER</button>
+        <button onclick="switchCategory('mcgg')" id="tab-mcgg" class="nav-btn glass-card">MAGIC CHESS</button>
+        <button onclick="switchCategory('hok')" id="tab-hok" class="nav-btn glass-card">HONOR OF KINGS</button>
+        <button onclick="switchCategory('pubg')" id="tab-pubg" class="nav-btn glass-card">PUBG MOBILE</button>
+        <button onclick="switchCategory('ff')" id="tab-ff" class="nav-btn glass-card">FREE FIRE</button>
+        <button onclick="switchCategory('robux')" id="tab-robux" class="nav-btn glass-card">ROBUX</button>
+        <button onclick="switchCategory('coc')" id="tab-coc" class="nav-btn glass-card">COC</button>
+        <button onclick="switchCategory('genshin')" id="tab-genshin" class="nav-btn glass-card">GENSHIN</button>
+        <button onclick="switchCategory('digital')" id="tab-digital" class="nav-btn glass-card">SUBSCRIPTIONS</button>
+        <button onclick="switchCategory('others')" id="tab-others" class="nav-btn glass-card">OTHERS</button>
+    </nav>
+
+    <div id="cat-info" class="text-[11px] text-yellow-500 mb-4 font-bold text-center italic hidden"></div>
+
+    <section class="glass-card p-5 mb-5">
+        <div class="text-[10px] text-blue-400 font-bold uppercase mb-3"><i class="fas fa-id-card mr-2"></i>Order Information</div>
+        <div class="space-y-3">
+            <input type="text" id="userId" placeholder="Player ID / Username / Gmail" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm font-bold w-full focus:border-blue-500 outline-none">
+            <input type="text" id="zoneId" placeholder="Zone ID / Password / Server" class="bg-slate-900 border border-slate-700 p-3 rounded-xl text-sm font-bold w-full focus:border-blue-500 outline-none">
         </div>
-        <p id="id-alert" class="text-red-400 text-xs mt-2 hidden"><i class="fas fa-exclamation-circle mr-1"></i>ကျေးဇူးပြု၍ ဂဏန်းများကိုသာ ထည့်သွင်းပေးပါ။</p>
-    </div>
+    </section>
 
-    <h3 class="text-sm font-bold text-gray-400 mb-4 tracking-wider"><i class="fas fa-gem mr-2 text-blue-400"></i>SELECT PACKAGES</h3>
-    <div class="grid grid-cols-3 gap-3" id="package-list"></div>
+    <section id="package-section" class="mb-6">
+        <div class="text-[10px] text-blue-400 font-bold uppercase mb-3"><i class="fas fa-gem mr-2"></i>Select Items</div>
+        <div id="package-list" class="grid grid-cols-2 gap-3 max-h-[400px] overflow-y-auto pr-1">
+            </div>
+    </section>
 
-    <div class="mt-10 text-center pb-8">
-        <p class="text-gray-600 text-xs mb-3">Powered by Casa Game Shop © 2026</p>
-        <a href="https://t.me/Casa4Ev1" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-full font-bold text-sm shadow-md">
-            <i class="fab fa-telegram mr-2"></i>Contact Admin
-        </a>
-    </div>
+    <section class="glass-card p-5 mb-5 border-dashed border-slate-700">
+        <div class="text-[10px] text-yellow-500 font-bold uppercase mb-3 tracking-widest">KPay Payment</div>
+        <div onclick="copyNum('09786xxxxxx', 'KPay')" class="flex items-center justify-between bg-slate-900 p-3 rounded-xl border border-slate-800 cursor-pointer">
+            <div class="flex items-center gap-3">
+                <img src="https://i.imgur.com/8K8zO9M.png" class="w-6 h-6 rounded shadow-sm">
+                <span class="text-sm font-bold">09786xxxxxx (Casa Admin)</span>
+            </div>
+            <i class="far fa-copy text-slate-500 text-xs"></i>
+        </div>
+    </section>
+
+    <section class="glass-card p-4 mb-8">
+        <label class="block w-full h-20 bg-slate-900 border-2 border-dashed border-slate-700 rounded-2xl cursor-pointer relative overflow-hidden transition hover:border-blue-500">
+            <input type="file" id="slip" class="hidden" onchange="preview(event)" accept="image/*">
+            <div id="upload-txt" class="flex items-center justify-center h-full text-slate-500 text-[10px] font-bold uppercase">
+                <i class="fas fa-camera mr-2"></i> Upload Payment Slip
+            </div>
+            <img id="previewImg" class="hidden absolute inset-0 w-full h-full object-contain p-2">
+        </label>
+    </section>
+
+    <button onclick="send()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 py-4 rounded-2xl font-black text-white shadow-lg uppercase tracking-widest active:scale-95 transition-all mb-10">
+        Confirm Order <i class="fas fa-check-circle ml-1"></i>
+    </button>
 
     <script>
-        let activeCategory = 'mlbb';
+        let currentCat = 'mlbb_std';
+        let selectedItem = null;
 
-        // ဂိမ်းအလိုက် Data များ (စျေးအနည်းဆုံးများကို တွက်ချက်ထားသည်)
-        const gameData = {
-            mlbb: [
-                { d: 11, p: 950 }, { d: 22, p: 1900 }, { d: 33, p: 2850 },
-                { d: 44, p: 3700 }, { d: 56, p: 4400 }, { d: 86, p: 6000 },
-                { d: 112, p: 8200 }, { d: 172, p: 11400 }, { d: 257, p: 16900 },
-                { d: 343, p: 22800 }, { d: 429, p: 27500 }, { d: 514, p: 33000 },
-                { d: 600, p: 38200 }, { d: 706, p: 44200 }, { d: 878, p: 54900 }
+        const allData = {
+            mlbb_std: [
+                {d: "11 💎", p: 900}, {d: "22 💎", p: 1800}, {d: "33 💎", p: 2700}, {d: "44 💎", p: 3500},
+                {d: "56 💎", p: 4200}, {d: "112 💎", p: 7900}, {d: "Weekly Pass", p: 6800}, {d: "Monthly Epic", p: 17300},
+                {d: "50+50 💎 (2X)", p: 3900}, {d: "150+150 💎 (2X)", p: 10900}, {d: "Mythic Emblem Pack", p: 19500}, {d: "Material Pack", p: 11600}
+            ],
+            mlbb_ban: [
+                {d: "WP (Ban Server)", p: 9500}, {d: "14 💎", p: 1200}, {d: "70 💎", p: 5500}, {d: "140 💎", p: 10900},
+                {d: "284 💎", p: 21900}, {d: "513 💎", p: 37000}, {d: "1145 💎", p: 84800}, {d: "50+50 💎 (2X)", p: 4300}
+            ],
+            mlbb_indo: [
+                {d: "WP (Indo)", p: 8500}, {d: "19 💎", p: 1800}, {d: "44 💎", p: 3700}, {d: "85 💎", p: 6500},
+                {d: "170 💎", p: 12700}, {d: "568 💎", p: 41000}, {d: "2010 💎", p: 134000}
+            ],
+            mlbb_rus: [
+                {d: "WP (Russia)", p: 9550}, {d: "35 💎", p: 3000}, {d: "55 💎", p: 4900}, {d: "165 💎", p: 14000},
+                {d: "275 💎", p: 22700}, {d: "1155 💎", p: 87500}, {d: "6000 💎", p: 420000}
+            ],
+            mcgg: [
+                {d: "MCGG WP", p: 7200}, {d: "11 💎", p: 900}, {d: "86 💎", p: 5700}, {d: "516 💎", p: 32000},
+                {d: "50+50 2X", p: 4000}, {d: "150+150 2X", p: 10700}, {d: "Battle Bounty", p: 3500}
+            ],
+            hok: [
+                {d: "80+ Tokens", p: 4000}, {d: "160+ Tokens", p: 7900}, {d: "Weekly Card", p: 4900}, 
+                {d: "Weekly Card Plus", p: 13900}, {d: "Premium Rebate", p: 6300}, {d: "8000+ Tokens", p: 369000}
             ],
             pubg: [
-                { d: 60, p: 1900 }, { d: 325, p: 9500 }, { d: 660, p: 18500 },
-                { d: 1800, p: 49500 }, { d: 3850, p: 95000 }, { d: 8100, p: 185000 }
+                {d: "60 UC", p: 3750}, {d: "325 UC", p: 18500}, {d: "660 UC", p: 37000}, {d: "Prime (1 Mo)", p: 4000},
+                {d: "Prime Plus (1 Mo)", p: 38500}, {d: "1800 Login UC", p: "Ask Price"}, {d: "8100 Login UC", p: "Ask Price"}
+            ],
+            ff: [
+                {d: "33 💎", p: 1700}, {d: "101 💎", p: 4500}, {d: "310 💎", p: 13500}, {d: "Weekly Pass", p: 9600},
+                {d: "Monthly Pass", p: 45000}, {d: "Weekly Lite", p: 5500}
+            ],
+            robux: [
+                {d: "80 Robux (ID)", p: 5300}, {d: "400 Robux (ID)", p: 22000}, {d: "1700 Robux (ID)", p: 91000},
+                {d: "80 Robux (MM)", p: 5700}, {d: "1000 Robux (MM)", p: 45000}, {d: "Premium 1m", p: 44000}
+            ],
+            coc: [
+                {d: "80 Gems", p: 2300}, {d: "500 Gems", p: 11500}, {d: "1200 Gems", p: 22200}, {d: "Gold Pass", p: "Check Price"},
+                {d: "Event Pass", p: "Check Price"}, {d: "Builder Pack", p: "Check Price"}
+            ],
+            genshin: [
+                {d: "Blessing 1m", p: 15500}, {d: "60 Crystals", p: 3100}, {d: "330 Crystals", p: 15300},
+                {d: "1090 Crystals", p: 45500}, {d: "Gnostic Hymn", p: 35000}
+            ],
+            digital: [
+                {d: "Telegram Premium (3m)", p: 44000}, {d: "Telegram Premium (1y)", p: 111500},
+                {d: "Telegram 50 Stars", p: 3450}, {d: "Netflix 4K Private", p: 14500},
+                {d: "Capcut Prem (1m)", p: 7000}, {d: "Alight Motion (1y)", p: 4500}, {d: "Canva Edu Lifetime", p: 3000}
+            ],
+            others: [
+                {d: "Bingo 20 💎", p: 2100}, {d: "Bingo 100 💎", p: 9300},
+                {d: "Eggy Party 60c", p: 3800}, {d: "Eggy Party 750c", p: 36400},
+                {d: "Arena Breakout 66", p: 3800}, {d: "Once Human 62", p: 4300},
+                {d: "Sky Season Pass", p: 31000}, {d: "Zepeto 14 zem", p: 2600}
             ]
         };
 
-        function switchCategory(category) {
-            activeCategory = category;
+        const catNotes = {
+            mlbb_ban: "Warning: Malay, PH, SG Servers only. Indo/Russia not available here.",
+            robux: "MM Server requires Username and Password.",
+            coc: "Requires Supercell Gmail + OTP.",
+            pubg: "Login UC requires QR Scan. 10 mins process.",
+            digital: "Capcut/Alight Motion: Account Login needed."
+        };
+
+        function switchCategory(cat) {
+            currentCat = cat; selectedItem = null;
+            document.querySelectorAll('.nav-btn').forEach(b => b.className = 'nav-btn glass-card');
+            document.getElementById(`tab-${cat}`).className = 'nav-btn active-tab';
             
-            const btnMlbb = document.getElementById('btn-mlbb');
-            const btnPubg = document.getElementById('btn-pubg');
-            const idLabel = document.getElementById('id-label');
-            const zoneLabel = document.getElementById('zone-label');
-
-            if (category === 'mlbb') {
-                btnMlbb.classList.add('active');
-                btnPubg.classList.remove('active');
-                idLabel.innerText = "Game ID (e.g. 12345678)";
-                zoneLabel.innerText = "Zone ID (e.g. 1234)";
-            } else {
-                btnPubg.classList.add('active');
-                btnMlbb.classList.remove('active');
-                idLabel.innerText = "PUBG Character ID";
-                zoneLabel.innerText = "Player Name";
-            }
-
-            renderPackages();
+            const info = document.getElementById('cat-info');
+            if(catNotes[cat]) { info.innerText = catNotes[cat]; info.classList.remove('hidden'); }
+            else { info.classList.add('hidden'); }
+            render();
         }
 
-        function renderPackages() {
-            const container = document.getElementById('package-list');
-            container.innerHTML = '';
-            
-            gameData[activeCategory].forEach(pkg => {
-                const title = activeCategory === 'mlbb' ? '💎 ' + pkg.d : '🔥 ' + pkg.d + ' UC';
-                container.innerHTML += `
-                    <div class="card-item p-3 text-center cursor-pointer" onclick="order('${pkg.d} ${activeCategory === 'mlbb' ? 'Diamonds' : 'UC'}', ${pkg.p})">
-                        <div class="text-blue-400 text-lg font-extrabold mb-1">${title}</div>
-                        <div class="text-xs font-medium text-gray-400 uppercase">${activeCategory}</div>
-                        <div class="text-xs font-extrabold text-yellow-400 mt-2">${pkg.p.toLocaleString()} Ks</div>
-                    </div>
-                `;
+        function render() {
+            const list = document.getElementById('package-list');
+            list.innerHTML = '';
+            allData[currentCat].forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = 'glass-card p-4 package-card text-center';
+                div.onclick = () => {
+                    selectedItem = item;
+                    document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected-pkg'));
+                    div.classList.add('selected-pkg');
+                };
+                div.innerHTML = `<div class="text-blue-400 font-bold text-xs uppercase">${item.d}</div>
+                                 <div class="text-[10px] text-yellow-500 font-bold mt-2">${typeof item.p === 'number' ? item.p.toLocaleString() + ' K' : item.p}</div>`;
+                list.appendChild(div);
             });
         }
 
-        function order(item, price) {
-            const userId = document.getElementById('userId').value;
-            const zoneId = document.getElementById('zoneId').value;
-            const alertText = document.getElementById('id-alert');
-
-            if (!userId || !zoneId) {
-                alert("⚠️ ကျေးဇူးပြု၍ အချက်အလက်များ အရင်ဖြည့်ပေးပါ!");
-                return;
-            }
-
-            // MLBB အတွက် ဂဏန်းစစ်ဆေးခြင်း (PUBG အတွက်မူ Character Name ပါနိုင်သောကြောင့် ဂဏန်းသာစစ်ဆေးရန်မလို)
-            if (activeCategory === 'mlbb') {
-                const isValidId = /^\d+$/.test(userId);
-                const isValidZone = /^\d+$/.test(zoneId);
-
-                if (!isValidId || !isValidZone) {
-                    alertText.classList.remove('hidden');
-                    return;
-                } else {
-                    alertText.classList.add('hidden');
-                }
-            } else {
-                alertText.classList.add('hidden');
-            }
-            
-            const message = `Game: ${activeCategory.toUpperCase()}%0AOrder: ${item}%0APrice: ${price} Ks%0AID: ${userId} (${zoneId})`;
-            window.location.href = `https://t.me/Casa4Ev1?text=${message}`;
+        function copyNum(num, name) {
+            navigator.clipboard.writeText(num);
+            const t = document.getElementById('toast');
+            t.innerText = `${name} Copied!`;
+            t.className = 'show';
+            setTimeout(() => t.className = '', 2500);
         }
 
-        // Default စတင်သည့်အခါ MLBB Packages များကိုပြသရန်
-        switchCategory('mlbb');
+        function preview(e) {
+            const file = e.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    document.getElementById('previewImg').src = reader.result;
+                    document.getElementById('previewImg').classList.remove('hidden');
+                    document.getElementById('upload-txt').classList.add('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function send() {
+            const id = document.getElementById('userId').value;
+            const zone = document.getElementById('zoneId').value;
+            if(!id || !selectedItem) return alert("Please fill info and select an item!");
+            const msg = `Casa Order%0ACategory: ${currentCat.toUpperCase()}%0AItem: ${selectedItem.d}%0APrice: ${selectedItem.p}%0AInfo: ${id} / ${zone}`;
+            window.location.href = `https://t.me/Casa4Ev1?text=${msg}`;
+        }
+
+        window.onload = () => switchCategory('mlbb_std');
     </script>
 </body>
 </html>
